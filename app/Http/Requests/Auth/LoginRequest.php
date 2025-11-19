@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
+use Illuminate\Http\Exceptions\HttpResponseException;
+use Illuminate\Contracts\Validation\Validator;
 
 class LoginRequest extends FormRequest
 {
@@ -16,6 +18,7 @@ class LoginRequest extends FormRequest
      */
     public function authorize(): bool
     {
+        // return true;
         return true;
     }
 
@@ -82,4 +85,17 @@ class LoginRequest extends FormRequest
     {
         return Str::transliterate(Str::lower($this->string('email')).'|'.$this->ip());
     }
+
+    protected function failedValidation(Validator $validator)
+{
+    // Se a rota for da API (ex: começa com api/), força JSON
+    if ($this->wantsJson() || $this->is('api/*')) {
+        throw new HttpResponseException(response()->json([
+            'message' => 'Dados inválidos.',
+            'errors' => $validator->errors(),
+        ], 422));
+    }
+
+    parent::failedValidation($validator);
+}
 }
