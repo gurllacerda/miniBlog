@@ -4,10 +4,8 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Post;
-use App\Http\Resources\PostResource;
-use App\Models\User;
 use App\Http\Requests\StorePostRequest;
-use Illuminate\Http\Request;
+use App\Http\Requests\UpdatePostRequest;
 use Illuminate\Support\Facades\Auth;
 
 //resource is a way to transform the model data before sending it as a response
@@ -50,9 +48,13 @@ class PostController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(UpdatePostRequest $request, string $id)
     {
-        //
+        $validatedData = $request->validated();
+        $post = Post::findOrFail($id);
+        $post->update($validatedData);
+        return $post->toResource();
+
     }
 
     /**
@@ -60,6 +62,11 @@ class PostController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+
+        // dd('hit');
+        $post = Post::findOrFail($id);
+        $post->delete();
+
+        return response()->json(['message' => 'Post deleted successfully.'], 200);
     }
 }

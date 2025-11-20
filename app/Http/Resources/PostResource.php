@@ -15,17 +15,24 @@ class PostResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
+
+        // if ($request->method() === 'POST'){
+        //     return [
+        //         'id' => $this->id,
+        //         'title' => $this->title,
+        //         'body' => $this->body,
+        //         'created_at' => $this->created_at->toDateTimeString(),
+        //         'updated_at' => $this->updated_at->toDateTimeString(),
+        //     ];
+        // }
         return [
             'id' => $this->id,
             'title' => $this->title,
             'body' => $this->body,
-            // 'user' => [
-            //     'id' => $this->user->id,
-            //     'name' => $this->user->name,
-            //     'email' => $this->user->email,
-            // ],
             'created_at' => $this->created_at->toDateTimeString(),
             'updated_at' => $this->updated_at->toDateTimeString(),
         ];
     }
+
+
 }
