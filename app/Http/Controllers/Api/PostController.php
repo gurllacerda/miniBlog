@@ -17,6 +17,7 @@ class PostController extends Controller
     public function index()
     {
         $posts = Post::latest()->with(['user'])->get();
+        
         // return PostResource::collection($posts);
         return $posts->toResourceCollection();
     }
@@ -28,7 +29,6 @@ class PostController extends Controller
     {
         $data = $request->validated();
         $data['user_id'] = Auth::user()->id;
-
         $post = Post::create($data);
 
         return $post->toResource();
@@ -53,8 +53,8 @@ class PostController extends Controller
         $validatedData = $request->validated();
         $post = Post::findOrFail($id);
         $post->update($validatedData);
-        return $post->toResource();
 
+        return $post->toResource();
     }
 
     /**
@@ -62,8 +62,6 @@ class PostController extends Controller
      */
     public function destroy(string $id)
     {
-
-        // dd('hit');
         $post = Post::findOrFail($id);
         $post->delete();
 

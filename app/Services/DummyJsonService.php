@@ -4,6 +4,8 @@ namespace App\Services;
 
 use Illuminate\Http\Client\Factory as HttpClient;
 use Illuminate\Support\Facades\Log; 
+use App\DTOs\DummyJson\QuoteDTO;
+
 
 class DummyJsonService
 {
@@ -22,7 +24,6 @@ class DummyJsonService
     {
         $slug = sprintf('image/%dx%d/%s?fontFamily=%s&text=%s', $width, $height, $bg, urlencode($fontFamily), urlencode($text));
         $fullUrl = $this->baseUrl . $slug;
-
         try {
             $response = $this->http->withoutVerifying()->get($fullUrl);
 
@@ -54,7 +55,8 @@ class DummyJsonService
 
             
             if ($response->successful()) {
-                return $response->json(); 
+                $quote = QuoteDTO::fromApiData($response->json());
+                return $quote; //now quote is an instance of QuoteDTO
             }
 
             return null;

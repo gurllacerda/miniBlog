@@ -52,11 +52,11 @@
                                 <h4 class="text-sm font-semibold mb-2 text-gray-800 dark:text-gray-100">Quote do dia</h4>
 
                                 <p class="text-sm text-gray-700 dark:text-gray-300 flex-1">
-                                    {{ $quote['quote'] ?? 'Sem quote no momento.' }}
+                                    {{ $quote->quote ?? 'Sem quote no momento.' }}
                                 </p>
 
                                 <div class="mt-3 text-xs text-gray-500 dark:text-gray-400">
-                                    — {{ $quote['author'] ?? $quote->author ?? 'Desconhecido' }}
+                                    — {{ $quote->author ?? 'Desconhecido' }}
                                 </div>
                             </div>
                         </aside>

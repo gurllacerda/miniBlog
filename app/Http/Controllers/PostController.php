@@ -28,13 +28,16 @@ class PostController extends Controller
     public function index()
     {
         //remeber that the getRandomQuote method is insecure
+
+
         //app is the container injecting the instance 
         //$service = app(\App\Services\DummyJsonService::class);
-        $quoteData = $this->dummyJsonService->getRandomQuote();
+        $dtoQuote = $this->dummyJsonService->getRandomQuote();
+        
 
         $posts = Post::latest()->with(['user'])->get();
         return view("post.index",[
-            'quote' => $quoteData,
+            'quote' => $dtoQuote, //dtoQuote just to make clear it's a DTO
             'posts' => $posts
         ]);
     }
