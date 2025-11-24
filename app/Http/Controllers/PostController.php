@@ -28,8 +28,7 @@ class PostController extends Controller
     public function index()
     {
         //remeber that the getRandomQuote method is insecure
-
-
+        
         //app is the container injecting the instance 
         //$service = app(\App\Services\DummyJsonService::class);
         $dtoQuote = $this->dummyJsonService->getRandomQuote();
