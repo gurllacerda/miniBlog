@@ -28,7 +28,7 @@ Route::controller(ApiCommentController::class)
         ->group(function () {
             Route::get('/', 'index')->name('comments.api');
             Route::post('/', 'store')->name('comments.api.store');
-            Route::delete('/{comment}', 'destroy')->name('comments.destroy');
-            Route::get('/{comment}/edit', 'edit')->name('comments.edit');
-            Route::patch('/{comment}', 'update')->name('comments.update');
+            Route::get('/{comment}', 'show')->name('comments.api.show');
+            Route::delete('/{comment}', 'destroy')->name('comments.api.destroy');
+            Route::patch('/{comment}', 'update')->name('comments.api.update');
         });
